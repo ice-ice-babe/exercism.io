@@ -6,13 +6,8 @@ defmodule WordCount do
   """
   @spec count(String.t()) :: map
   def count(sentence) do
-    sentence
-    |> String.downcase
-    |> String.replace(~r/[ !"$%&,:@^_]+/," ")
-    |> String.split
-    |> Enum.reduce(%{},
-    fn(word, acc) ->
-      Map.put(acc, word, Map.get(acc, word, 0) +1)
-    end)
+    Regex.scan(~r/[[:alnum:]-]+/u, sentence |> String.downcase)  
+    |> List.flatten
+    |> Enum.frequencies
   end
 end
